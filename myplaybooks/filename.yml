@@ -1,0 +1,5 @@
+- hosts: demo 
+  become: true
+  tasks:
+  - name: Create a file
+    file: path=/home/ansible/niranjan.txt state=touch

@@ -1,0 +1,42 @@
+---
+- hosts: demo 
+  become: yes
+  tasks:
+   - name: install Apache server
+     yum:
+       name: httpd
+       state: latest
+
+   - name: enable and start Apache server
+     service:
+       name: httpd
+       enabled: yes
+       state: started
+
+   - name: create web admin group
+     group:
+       name: web
+       state: present
+
+   - name: create web admin user
+     user:
+       name: webadm
+       comment: "Web Admin"
+       groups: web
+       append: yes
+
+   - name: set content directory group/permissions 
+     file:
+       path: /var/www/html
+       owner: root
+       group: web
+       state: directory
+       mode: u=rwx,g=rwx,o=rx,g+s
+
+   - name: create default page content
+     copy:
+       content: "Welcome to {{ ansible_fqdn}} on {{ ansible_default_ipv4.address }}"
+       dest: /var/www/html/index.html
+       owner: webadm
+       group: web
+       mode: u=rw,g=rw,o=r

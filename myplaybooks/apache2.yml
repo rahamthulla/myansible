@@ -1,0 +1,15 @@
+---
+-
+  become: true
+  connection: ssh
+  hosts: demo
+  tasks:
+    -
+      command: "apt-get -y install apache2"
+      name: "Install apache server for dbian family"
+      when: "ansible_os_family == \"Debian\""
+    -
+      command: "apt-get install httpd"
+      name: "install apache server"
+      when: "ansible_os_family == \"redHot\""
+  user: ansible

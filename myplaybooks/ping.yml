@@ -1,0 +1,5 @@
+---
+- hosts: demo 
+  tasks:
+  - name: nodes
+    ping:

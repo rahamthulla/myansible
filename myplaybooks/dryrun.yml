@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: True
+  tasks:
+    - name: Install git
+      yum:
+        name: git12
+        state: present
